@@ -1,5 +1,16 @@
 version: '3.9'
+
 services:
+  app:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      redis:
+        condition: service_healthy
+    env_file: .env
+
   redis:
     image: redis
     restart: always
@@ -14,7 +25,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-
 
 volumes:
   redis_data:
