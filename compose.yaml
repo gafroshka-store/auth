@@ -1,1 +1,12 @@
-# Думаю не стоит объяснять
+services:
+  auth:
+    build: .
+    container_name: go_auth
+    command: ["/root/auth"]
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    name: shared-network
+    external: true
