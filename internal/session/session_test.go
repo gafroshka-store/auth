@@ -20,7 +20,7 @@ func setupMockRepo() (*SessionRepository, redismock.ClientMock) {
 		redisClient,
 		logger,
 		"test-token-secret",
-		time.Duration(15*time.Minute),
+		15*time.Minute,
 	)
 
 	return sessionRepo, mockRedis
