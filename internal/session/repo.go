@@ -24,12 +24,13 @@ func NewSessionRepository(
 	redisClient *redis.Client,
 	logger *zap.SugaredLogger,
 	tokenSecret string,
+	baseDuration time.Duration,
 ) *SessionRepository {
 	return &SessionRepository{
 		RedisClient:  redisClient,
 		Logger:       logger,
 		tokenSecret:  tokenSecret,
-		baseDuration: 15 * time.Minute,
+		baseDuration: baseDuration,
 	}
 }
 

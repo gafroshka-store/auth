@@ -16,7 +16,12 @@ func setupMockRepo() (*SessionRepository, redismock.ClientMock) {
 	redisClient, mockRedis := redismock.NewClientMock()
 	logger := zap.NewNop().Sugar()
 
-	sessionRepo := NewSessionRepository(redisClient, logger, "test-token-secret")
+	sessionRepo := NewSessionRepository(
+		redisClient,
+		logger,
+		"test-token-secret",
+		time.Duration(15*time.Minute),
+	)
 
 	return sessionRepo, mockRedis
 }
