@@ -1,13 +1,23 @@
-FROM golang:1.23.1 as builder
+FROM golang:1.23-alpine AS builder
+
+RUN apk update && apk add --no-cache git
 
 WORKDIR /app
+
 COPY . .
 
-RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -o /auth ./cmd/auth/
+RUN go mod download && go build -o /app/bin/auth ./cmd/auth/main.go
 
 FROM alpine:latest
-WORKDIR /root/
-COPY --from=builder /auth .
 
-CMD ["/root/auth"]
+RUN apk --no-cache add ca-certificates
+
+COPY --from=builder /app/bin/auth /app/auth
+COPY --from=builder /app/config/config.example.yaml /app/config/config.yaml
+COPY --from=builder /app/db/init.sql /app/db/init.sql
+
+WORKDIR /app
+
+EXPOSE 8080
+
+CMD ["/app/auth"]
