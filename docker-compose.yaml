@@ -3,7 +3,7 @@ services:
     build: .
     restart: always
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       redis:
         condition: service_healthy
@@ -13,9 +13,17 @@ services:
   redis:
     image: redis
     restart: always
+    ports:
+      - "6179:6379"
     volumes:
       - redis_data:/data
-    command: ["redis-server", "--appendonly", "yes"]
+    command: [
+      "redis-server",
+      "--requirepass", "redis_password",
+      "--appendonly", "yes",
+      "--maxmemory", "512mb",
+      "--maxmemory-policy", "volatile-lru"
+    ]
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s

@@ -3,6 +3,7 @@ package erros
 import "errors"
 
 var (
-	ErrSessionNotFound  = errors.New("session not found")
-	ErrSessionIsExpired = errors.New("session is expired")
+	ErrFailedToConnectRedis = errors.New("failed to connect to redis")
+	ErrSessionNotFound      = errors.New("session not found")
+	ErrSessionIsExpired     = errors.New("session is expired")
 )
