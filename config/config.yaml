@@ -1,0 +1,7 @@
+redis:
+  host: redis
+  port: 6379
+  db: 0
+  password: redis_password
+token_secret: mysecrettoken
+server_port: 8081

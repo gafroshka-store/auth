@@ -18,6 +18,6 @@ COPY --from=builder /app/db/init.sql /app/db/init.sql
 
 WORKDIR /app
 
-EXPOSE 8080
+EXPOSE 8081
 
 CMD ["/app/auth"]
